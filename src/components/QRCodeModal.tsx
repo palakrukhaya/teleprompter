@@ -97,16 +97,18 @@ export function QRCodeModal({ isOpen, onClose, roomKey }: QRCodeModalProps) {
           </div>
         </div>
 
-        <div className="flex justify-end gap-2">
-          <Button variant="outline" onClick={onClose}>
+        <div className="flex justify-end gap-3 pt-2">
+          <Button variant="outline" onClick={onClose} className="border-neutral-800 text-neutral-300 hover:bg-neutral-900">
             Done
           </Button>
           <Button
-            variant="default"
-            className="bg-amber-500 hover:bg-amber-400 text-black font-semibold"
-            onClick={() => window.open(pairingUrl, "_blank")}
+            className="!bg-amber-500 hover:!bg-amber-400 !text-black font-bold shadow-md shadow-amber-500/20"
+            onClick={() => {
+              window.open(pairingUrl, "_blank");
+              onClose();
+            }}
           >
-            <ExternalLink size={16} className="mr-1" />
+            <ExternalLink size={16} className="mr-1.5" />
             Open Remote in Tab
           </Button>
         </div>

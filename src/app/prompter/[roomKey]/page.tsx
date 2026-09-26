@@ -46,7 +46,7 @@ export default function PrompterPage() {
   // Prompter Configuration State
   const [isPlaying, setIsPlaying] = useState(false);
   const [scrollSpeed, setScrollSpeed] = useState(2); // 0.5 to 10
-  const [fontSize, setFontSize] = useState(48); // 24 to 96
+  const [fontSize, setFontSize] = useState(38); // 24 to 96
   const [lineSpacing, setLineSpacing] = useState(1.6);
   const [isMirrored, setIsMirrored] = useState(false);
   const [showFocusGuide, setShowFocusGuide] = useState(true);
@@ -383,7 +383,7 @@ export default function PrompterPage() {
 
           <div className="h-4 w-px bg-neutral-800" />
 
-          <h1 className="text-sm font-bold text-neutral-300 max-w-xs truncate">
+          <h1 className="text-sm font-bold text-neutral-300 max-w-sm md:max-w-md lg:max-w-xl truncate">
             {session.title}
           </h1>
         </div>
@@ -437,14 +437,14 @@ export default function PrompterPage() {
       {/* Main Scrolling Text Content */}
       <div
         ref={scrollContainerRef}
-        className="h-full w-full overflow-y-auto px-12 md:px-32 lg:px-48 pt-[35vh] pb-[60vh] scroll-smooth no-scrollbar"
+        className="h-full w-full overflow-y-auto px-6 md:px-16 lg:px-24 pt-[35vh] pb-[60vh] scroll-smooth no-scrollbar"
         style={{
           color: textColor,
           fontSize: `${fontSize}px`,
           lineHeight: lineSpacing,
         }}
       >
-        <div className="max-w-4xl mx-auto space-y-8 font-sans font-medium tracking-normal text-left whitespace-pre-wrap">
+        <div className="max-w-5xl mx-auto space-y-8 font-sans font-medium tracking-normal text-left whitespace-pre-wrap">
           {session.content.split("\n\n").map((paragraph, idx) => (
             <p key={idx} className="transition-opacity duration-200">
               {paragraph}
