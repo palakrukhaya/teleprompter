@@ -11,6 +11,9 @@ RUN npm ci
 
 COPY . .
 
+# Ensure public folder exists
+RUN mkdir -p /app/public
+
 # Build Next.js production bundle
 RUN npm run build
 
