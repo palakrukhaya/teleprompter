@@ -9,7 +9,7 @@
     "build": "next build",
     "start": "next start -p 3000",
     "start:server": "tsx server/index.ts",
-    "start:all": "concurrently -n \"server,next\" -c \"green,blue\" \"npm run start:server\" \"npm run start\"",
+    "start:all": "node server/start.mjs",
     "lint": "next lint"
   },
   "dependencies": {
@@ -22,6 +22,7 @@
     "better-sqlite3": "^11.8.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "concurrently": "^10.0.5",
     "hono": "^4.13.9",
     "lucide-react": "^1.48.0",
     "next": "14.2.35",
@@ -30,6 +31,7 @@
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^3.7.0",
+    "tsx": "^4.23.15",
     "ws": "^8.22.0"
   },
   "devDependencies": {
@@ -39,12 +41,10 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/ws": "^8.18.1",
-    "concurrently": "^10.0.5",
     "eslint": "^8",
     "eslint-config-next": "14.2.35",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }

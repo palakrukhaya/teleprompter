@@ -389,6 +389,40 @@ app.get("/party/controls/:roomKey", wsHandler);
 app.get("/parties/:party/:roomKey", wsHandler);
 app.get("/party/:roomKey", wsHandler);
 
+// In production (when NEXT_PORT is defined), proxy all other requests to Next.js
+const nextPort = process.env.NEXT_PORT;
+if (nextPort) {
+  app.all("/*", async (c) => {
+    const targetUrl = `http://127.0.0.1:${nextPort}${c.req.path}${
+      c.req.raw.url.includes("?") ? c.req.raw.url.slice(c.req.raw.url.indexOf("?")) : ""
+    }`;
+
+    const reqHeaders = new Headers(c.req.raw.headers);
+    reqHeaders.delete("host");
+    reqHeaders.delete("connection");
+
+    try {
+      const res = await fetch(targetUrl, {
+        method: c.req.method,
+        headers: reqHeaders,
+        body: ["GET", "HEAD"].includes(c.req.method)
+          ? undefined
+          : await c.req.raw.arrayBuffer(),
+        // @ts-ignore
+        duplex: "half",
+      });
+
+      return new Response(res.body, {
+        status: res.status,
+        headers: res.headers,
+      });
+    } catch (err) {
+      console.error("[Proxy Error]:", err);
+      return c.text("Frontend is starting up, please refresh in a moment...", 503);
+    }
+  });
+}
+
 const PORT = Number(process.env.PORT || 3001);
 const server = serve(
   {

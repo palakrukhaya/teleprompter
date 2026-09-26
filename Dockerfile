@@ -23,13 +23,13 @@ FROM node:20-slim AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
-ENV PORT=3001
+ENV PORT=3000
 ENV BACKEND_URL=http://127.0.0.1:3001
 
 RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
-RUN npm ci --only=production && npm install tsx concurrently
+RUN npm ci --omit=dev
 
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
@@ -41,6 +41,6 @@ COPY --from=builder /app/tsconfig.json ./tsconfig.json
 RUN mkdir -p /app/data
 VOLUME ["/app/data"]
 
-EXPOSE 3000 3001
+EXPOSE 3000
 
-CMD ["npm", "run", "start:all"]
+CMD ["node", "server/start.mjs"]
