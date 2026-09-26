@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  teleprompter:
+    build: .
+    container_name: teleprompter_app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - BACKEND_URL=http://127.0.0.1:3001
