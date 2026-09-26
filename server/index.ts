@@ -400,6 +400,7 @@ if (nextPort) {
     const reqHeaders = new Headers(c.req.raw.headers);
     reqHeaders.delete("host");
     reqHeaders.delete("connection");
+    reqHeaders.delete("accept-encoding");
 
     try {
       const res = await fetch(targetUrl, {
@@ -412,9 +413,13 @@ if (nextPort) {
         duplex: "half",
       });
 
+      const responseHeaders = new Headers(res.headers);
+      responseHeaders.delete("content-encoding");
+      responseHeaders.delete("content-length");
+
       return new Response(res.body, {
         status: res.status,
-        headers: res.headers,
+        headers: responseHeaders,
       });
     } catch (err) {
       console.error("[Proxy Error]:", err);
